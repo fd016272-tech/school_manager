@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Étudiants · School Manager{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Annuaire</p>
+        <h1>Étudiants</h1>
+        <p class="page-meta">{{ students|length }} étudiant{{ students|length|pluralize }}{% if classe %} · Classe {{ classe }}{% endif %}</p>
+    </div>
+</div>
+<form method="get" action="{% url 'students:list' %}" class="search-form" role="search">
+    <label for="student-search">Rechercher un étudiant</label>
+    <input id="student-search" type="search" name="q" value="{{ query }}" placeholder="Nom ou prénom">
+    <button type="submit">Rechercher</button>
+</form>
+{% if classe %}<p class="filter-chip">Classe <strong>{{ classe }}</strong></p>{% endif %}
+<div class="table-responsive">
+<table class="table elegant-table align-middle">
+<thead><tr><th>N°</th><th>Prénom</th><th>Nom</th><th>Classe</th><th>Âge</th><th>Email</th><th>Statut</th></tr></thead>
+<tbody>
+{% for student in students %}
+<tr>
+<td>{{ student.id }}</td>
+<td><a href="{% url 'students:detail' student.id %}">{{ student.first_name }}</a></td>
+<td>{{ student.last_name|upper }}</td>
+<td><a href="{% url 'students:by_class' student.classe %}">{{ student.classe }}</a></td>
+<td>{{ student.age|default:"—" }}</td>
+<td>{{ student.email }}</td>
+<td><span class="status-badge {% if not student.active %}status-inactive{% endif %}">{% if student.active %}Actif{% else %}Inactif{% endif %}</span></td>
+</tr>
+{% empty %}
+<tr><td colspan="7">Aucun étudiant inscrit.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

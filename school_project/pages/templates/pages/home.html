@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Accueil · School Manager{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <p class="eyebrow">Tableau de bord</p>
+        <h1>Bienvenue dans<br>School Manager</h1>
+        <p class="hero-lead">{{ school_name }}</p>
+        <div class="hero-actions">
+            <a class="button button-primary" href="{% url 'students:list' %}">Voir les étudiants</a>
+            <a class="button button-secondary" href="{% url 'teachers:list' %}">Voir les enseignants</a>
+        </div>
+    </div>
+    <div class="hero-emblem" aria-hidden="true">
+        <span>SM</span>
+    </div>
+</section>
+
+<section class="stats-grid" aria-label="Résumé de l'établissement">
+    <article class="stat-card">
+        <div class="stat-icon stat-icon-green">Et</div>
+        <div><p>Étudiants</p><strong>{{ nb_students }}</strong></div>
+    </article>
+    <article class="stat-card">
+        <div class="stat-icon stat-icon-gold">Ac</div>
+        <div><p>Étudiants actifs</p><strong>{{ nb_active }}</strong></div>
+    </article>
+    <article class="stat-card">
+        <div class="stat-icon stat-icon-blue">En</div>
+        <div><p>Enseignants</p><strong>{{ nb_teachers }}</strong></div>
+    </article>
+    <article class="stat-card">
+        <div class="stat-icon stat-icon-purple">Cl</div>
+        <div><p>Classes</p><strong>{{ nb_classes }}</strong></div>
+    </article>
+</section>
+{% endblock %}

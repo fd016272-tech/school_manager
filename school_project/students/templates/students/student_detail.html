@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ student.first_name }} {{ student.last_name }} · School Manager{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'students:list' %}"><span aria-hidden="true">←</span> Retour à la liste</a>
+<section class="profile-card">
+    <div class="profile-avatar" aria-hidden="true">{{ student.first_name|first }}{{ student.last_name|first }}</div>
+    <div class="profile-heading">
+        <p class="eyebrow">Fiche étudiant</p>
+        <h1>{{ student.first_name }} {{ student.last_name|upper }}</h1>
+        <span class="status-badge {% if not student.active %}status-inactive{% endif %}">{% if student.active %}Actif{% else %}Inactif{% endif %}</span>
+    </div>
+    <dl class="student-details">
+        <dt>Numéro</dt><dd>{{ student.id }}</dd>
+        <dt>Classe</dt><dd><a href="{% url 'students:by_class' student.classe %}">{{ student.classe }}</a></dd>
+        <dt>Email</dt><dd><a href="mailto:{{ student.email }}">{{ student.email }}</a></dd>
+        <dt>Téléphone</dt><dd>{{ student.phone|default:"Non renseigné" }}</dd>
+        <dt>Date de naissance</dt><dd>{{ student.birth_date|default:"Non renseignée" }}</dd>
+        <dt>Statut</dt><dd>{% if student.active %}Actif{% else %}Inactif{% endif %}</dd>
+    </dl>
+</section>
+{% endblock %}
